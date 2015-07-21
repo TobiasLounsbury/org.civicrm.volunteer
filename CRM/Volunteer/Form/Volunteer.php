@@ -169,6 +169,17 @@ class CRM_Volunteer_Form_Volunteer extends CRM_Event_Form_ManageEvent {
    * @access public
    */
   public function preProcess() {
+
+    if(array_key_exists("snippet", $_REQUEST) && $_REQUEST['snippet'] == "json") {
+      //todo: generate url
+      if (!headers_sent())
+      {
+        $url = CRM_Utils_System::url('civicrm/a');
+        header("Location: ".$url."?snippet=json&route=/example");
+        exit;
+      }
+    }
+
     parent::preProcess();
 
     /*// Retrieve the profile IDs associated with the project; if none exist,
