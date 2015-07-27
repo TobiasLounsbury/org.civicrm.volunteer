@@ -175,7 +175,7 @@ class CRM_Volunteer_Form_Volunteer extends CRM_Event_Form_ManageEvent {
       if (!headers_sent())
       {
         $url = CRM_Utils_System::url('civicrm/a');
-        header("Location: ".$url."?snippet=json&route=/example");
+        header("Location: ".$url."?snippet=json&route=/volunteer/project/". $this->getProject()->id);
         exit;
       }
     }
