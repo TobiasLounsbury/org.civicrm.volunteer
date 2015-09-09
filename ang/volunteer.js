@@ -54,7 +54,7 @@
 
         // if no params are passed, get the data out of the URL
         if (searchParams) {
-          userSpecifiedSearchParams = searchParams();
+          userSpecifiedSearchParams = searchParams;
         } else {
           userSpecifiedSearchParams = $route.current.params;
         }
@@ -83,7 +83,7 @@
 
         // handle dates separately from other params
         var dateStartExists = $route.current.params.hasOwnProperty('date_start') && $route.current.params.date_start;
-        var dateEndExists = $route.current.params.hasOwnProperty('date_start') && $route.current.params.date_end;
+        var dateEndExists = $route.current.params.hasOwnProperty('date_end') && $route.current.params.date_end;
         if (dateStartExists && dateEndExists) {
           apiParams["api.VolunteerNeed.get"].start_time = {BETWEEN: [
             userSpecifiedSearchParams.date_start, userSpecifiedSearchParams.date_end

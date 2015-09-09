@@ -19,21 +19,40 @@
     // on page load, search based on the URL params
     volOppSearch.search();
 
-    $scope.searchParams = volOppSearch.getParams;
+
+    var searchParams = volOppSearch.getParams();
+
+    if (searchParams.hasOwnProperty('role')) {
+      if ($.isNumeric(searchParams.role)) {
+        searchParams.role = parseInt(searchParams.role);
+      } else {
+        searchParams.role = searchParams.role.split(",");
+      }
+    }
+
+    if (searchParams.hasOwnProperty('beneficiary')) {
+      if ($.isNumeric(searchParams.beneficiary)) {
+        searchParams.beneficiary = parseInt(searchParams.beneficiary);
+      } else {
+        searchParams.beneficiary = searchParams.beneficiary.split(",");
+      }
+    }
+
     // set default dates
     var today = new Date();
-    if (!$scope.searchParams().hasOwnProperty('date_start')) {
-      $scope.searchParams().date_start =
+    if (!searchParams.hasOwnProperty('date_start')) {
+      searchParams.date_start =
         [today.getFullYear(), today.getMonth() + 1, today.getDate()].join('-');
     }
-    if (!$scope.searchParams().hasOwnProperty('date_end')) {
+    if (!searchParams.hasOwnProperty('date_end')) {
       var end = new Date();
       end.setDate(today.getDate() + 30);
-      $scope.searchParams().date_end =
+      searchParams.date_end =
         [end.getFullYear(), end.getMonth() + 1, end.getDate()].join('-');
     }
 
-    $scope.volOppData = volOppSearch.getResult;
+    $scope.searchParams = searchParams;
+    $scope.volOppData = volOppSearch.getResult();
 
     $scope.checkout = function () {
       if ($route.current.params.hasOwnProperty('dest') && $route.current.params.dest) {
